@@ -1,0 +1,2 @@
+test,weeks,gross_return,net_return,vol,sharpe_gross,sharpe_net,max_dd,turnover_wk,funding_ann,price_ann,cost_ann
+"Exploratory: short coins above a 25 bp band, hedged with the universe",319,-0.00696437567145,-0.0377497150920032,0.2148016376014958,-0.03244489850894835,-0.17574221273879304,-0.5523170833769806,0.5920257580875615,-0.05029235835255689,0.043327982681106915,0.030785339420553205

@@ -1,0 +1,519 @@
+<title>Kimchi Premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>/* Layout concept: a research desk note in the same family as "Crowded Carry" (Strategy 1), warmed toward
+   the Korean side of the trade. A readable narrative column, full-width figure benches, one term sheet. */
+:root {
+  --page: #f6f4f2;
+  --surface: #ffffff;
+  --ink: #17120e;
+  --ink-2: #4e4741;
+  --muted: #766e67;
+  --hair: #e7e1db;
+  --axis: #cdc4bc;
+  --shade: rgba(235, 104, 52, 0.08);
+  --accent: #eb6834;
+  --accent-ink: #b84f1c;
+  --chip: #f7ebe3;
+  --s-kr: #eb6834;
+  --s-jp: #2a78d6;
+  --s-btc: #4a3aa7;
+  --s-ref: #808a95;
+  --s-v3: #1baf7a;
+  --s-v5: #e87ba4;
+  --s-carry: #808a95;
+  --s-crowd: #2a78d6;
+  --div-neg: #e34948;
+  --div-pos: #2a78d6;
+  --div-mid: #efebe7;
+  --good: #006300;
+  --bad: #b42727;
+  --font-display: "Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --radius: 10px;
+  --col: 46rem;
+  --wide: 70rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #110e0c; --surface: #1a1613; --ink: #f3eee9; --ink-2: #c6bcb3; --muted: #978d84; --hair: #2c2622; --axis: #483f38;
+    --shade: rgba(217, 89, 38, 0.13); --accent: #ef7a45; --accent-ink: #f39a6e; --chip: #2a1f19;
+    --s-kr: #d95926; --s-jp: #3987e5; --s-btc: #9085e9; --s-ref: #6f7983; --s-v3: #199e70; --s-v5: #d55181; --s-carry: #6f7983; --s-crowd: #3987e5;
+    --div-neg: #e66767; --div-pos: #3987e5; --div-mid: #2b2521; --good: #0ca30c; --bad: #e66767;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #110e0c; --surface: #1a1613; --ink: #f3eee9; --ink-2: #c6bcb3; --muted: #978d84; --hair: #2c2622; --axis: #483f38;
+  --shade: rgba(217, 89, 38, 0.13); --accent: #ef7a45; --accent-ink: #f39a6e; --chip: #2a1f19;
+  --s-kr: #d95926; --s-jp: #3987e5; --s-btc: #9085e9; --s-ref: #6f7983; --s-v3: #199e70; --s-v5: #d55181; --s-carry: #6f7983; --s-crowd: #3987e5;
+  --div-neg: #e66767; --div-pos: #3987e5; --div-mid: #2b2521; --good: #0ca30c; --bad: #e66767;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--page); color: var(--ink); font: 400 16px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; }
+.wrap { padding-inline: 16px; padding-block: 0 64px; }
+.col { max-width: var(--col); margin-inline: auto; }
+.wide { max-width: var(--wide); margin-inline: auto; }
+a { color: var(--accent-ink); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+.topnav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--page) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--hair); }
+.topnav-inner { max-width: var(--wide); margin-inline: auto; padding: 10px 16px; display: flex; gap: 18px; align-items: center; overflow-x: auto; scrollbar-width: none; }
+.topnav-inner::-webkit-scrollbar { display: none; }
+.brand { font: 700 15px/1 var(--font-display); font-stretch: 112%; letter-spacing: 0.01em; white-space: nowrap; color: var(--ink); text-decoration: none; }
+.topnav a.nav { font-size: 13px; color: var(--ink-2); text-decoration: none; white-space: nowrap; }
+.topnav a.nav:hover { color: var(--ink); }
+
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 800; font-stretch: 118%; line-height: 0.98; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.15rem); font-weight: 700; font-stretch: 112%; line-height: 1.12; }
+h3 { font-size: 1.12rem; font-weight: 700; font-stretch: 108%; line-height: 1.3; }
+p { margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.dek { font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.5; color: var(--ink-2); max-width: 42rem; }
+.prose { display: grid; gap: 14px; }
+.prose p { max-width: 65ch; }
+.num, .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.note { font-size: 13px; color: var(--muted); max-width: 72ch; }
+.small { font-size: 14px; }
+sub { font-size: 0.72em; }
+
+section { padding-block: 56px 8px; scroll-margin-top: 56px; }
+.sec-head { display: grid; gap: 10px; margin-bottom: 22px; }
+.stack { display: grid; gap: 22px; }
+
+/* hero */
+.hero { padding-block: 48px 8px; display: grid; gap: 24px; }
+.board { background: var(--surface); border: 1px solid var(--hair); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 14px; min-width: 0; }
+.board-head { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.board-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr)); gap: 0; border-top: 1px solid var(--hair); }
+.board-cell { padding: 12px 14px 10px 0; display: grid; gap: 3px; min-width: 0; border-bottom: 1px solid var(--hair); }
+.board-cell .lab { font-size: 12px; color: var(--muted); line-height: 1.3; }
+.board-cell .val { font: 600 1.5rem/1.15 var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.board-cell .sub { font-size: 12px; color: var(--ink-2); }
+.board-cell.hot .val { color: var(--accent-ink); }
+.op { font: 500 12px/1 var(--font-mono); color: var(--muted); }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 10px; }
+.tile { border-top: 2px solid var(--hair); padding-top: 10px; display: grid; gap: 2px; min-width: 0; }
+.tile .lab { font-size: 12px; color: var(--muted); line-height: 1.3; }
+.tile .val { font: 600 1.45rem/1.15 var(--font-body); }
+.tile .sub { font-size: 12px; color: var(--ink-2); }
+.tile.warn { border-top-color: var(--accent); }
+
+/* term sheet */
+.sheet { background: var(--surface); border: 1px solid var(--hair); border-radius: var(--radius); display: grid; grid-template-columns: 11rem 1fr; overflow: hidden; }
+.sheet > div { padding: 10px 16px; border-bottom: 1px solid var(--hair); min-width: 0; }
+.sheet > div:nth-last-child(-n+2) { border-bottom: 0; }
+.sheet .f { font: 500 12px/1.5 var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); background: color-mix(in srgb, var(--page) 60%, var(--surface)); }
+.sheet .v { font-size: 15px; }
+@media (max-width: 34rem) { .sheet { grid-template-columns: 1fr; } .sheet .f { border-bottom: 0; padding-bottom: 0; background: none; } }
+
+/* figure cards */
+.fig { background: var(--surface); border: 1px solid var(--hair); border-radius: var(--radius); padding: 18px 18px 14px; display: grid; gap: 12px; min-width: 0; grid-template-columns: minmax(0, 1fr); }
+.fig-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
+.fig-title { font: 600 15px/1.35 var(--font-body); }
+.fig-title.small { font-size: 14px; color: var(--ink-2); }
+.fig-sub { font-size: 13px; color: var(--ink-2); max-width: 72ch; }
+.fig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 16px; }
+.fig > *, .stack > *, .fig-grid > * { min-width: 0; }
+
+/* controls */
+.controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--hair); border-radius: 8px; overflow: hidden; background: var(--page); }
+.seg button { font: 500 13px/1 var(--font-body); color: var(--ink-2); background: transparent; border: 0; padding: 8px 11px; cursor: pointer; border-right: 1px solid var(--hair); }
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
+.toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); cursor: pointer; user-select: none; }
+.toggle input { accent-color: var(--accent); }
+.toggle .sw { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+.slider { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-2); }
+.slider input[type=range] { width: 9rem; accent-color: var(--accent); }
+.slider output { font-family: var(--font-mono); color: var(--ink); min-width: 3.5rem; }
+
+/* chart kit styles (shared with Crowded Carry) */
+.cc-chart { display: grid; gap: 6px; min-width: 0; }
+.cc-plot { width: 100%; min-width: 0; position: relative; }
+.cc-plot svg { display: block; overflow: visible; }
+.cc-axis-text { font: 400 11px var(--font-body); font-variant-numeric: tabular-nums; }
+.cc-end-label { font: 600 12px var(--font-body); font-variant-numeric: tabular-nums; }
+.cc-val-text { font: 500 11px var(--font-body); font-variant-numeric: tabular-nums; }
+.cc-bar { transition: opacity .12s; }
+.cc-bar.hover { opacity: 0.78; }
+.cc-chart-head { min-height: 4px; }
+.cc-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.cc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); }
+.cc-legend-key.line { width: 16px; height: 3px; border-radius: 2px; }
+.cc-legend-key.box { width: 11px; height: 11px; border-radius: 3px; }
+.cc-tip { position: fixed; z-index: 50; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--hair); border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,.14); padding: 8px 10px; font-size: 12px; display: grid; gap: 4px; max-width: 18rem; }
+.cc-tip-title { font-weight: 600; color: var(--ink-2); margin-bottom: 2px; }
+.cc-tip-row { display: grid; grid-template-columns: 14px auto 1fr; gap: 6px; align-items: center; }
+.cc-tip-key { width: 12px; height: 3px; border-radius: 2px; }
+.cc-tip-key.box { height: 10px; width: 10px; border-radius: 2px; }
+.cc-tip-val { font: 600 12px var(--font-mono); font-variant-numeric: tabular-nums; }
+.cc-tip-name { color: var(--ink-2); }
+.cc-table-wrap { overflow-x: auto; min-width: 0; }
+.cc-table { border-collapse: collapse; width: 100%; font-size: 13px; }
+.cc-table th { text-align: left; font: 500 11px/1.3 var(--font-body); color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 10px; border-bottom: 1px solid var(--axis); white-space: nowrap; }
+.cc-table td { padding: 7px 10px; border-bottom: 1px solid var(--hair); white-space: nowrap; }
+.cc-table th.num, .cc-table td.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.cc-table th:first-child, .cc-table td:first-child { text-align: left; font-family: var(--font-body); }
+.cc-table tr.hi td { background: var(--chip); }
+.cc-table tr.dim td { color: var(--muted); }
+.cc-table.compact td { padding: 5px 8px; }
+.cc-table td.wrap { white-space: normal; min-width: 16rem; }
+.cc-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 7px; vertical-align: -1px; }
+
+/* verdicts */
+.verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 10px; }
+.verdict { border: 1px solid var(--hair); border-radius: 8px; padding: 12px 14px; background: var(--surface); display: grid; gap: 6px; align-content: start; min-width: 0; }
+.pill { justify-self: start; font: 600 11px/1 var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 7px; border-radius: 999px; border: 1px solid currentColor; }
+.pill.yes { color: var(--good); }
+.pill.part { color: var(--accent-ink); }
+.pill.no { color: var(--bad); }
+.verdict .t { font-size: 14px; font-weight: 600; }
+.verdict .d { font-size: 13px; color: var(--ink-2); }
+
+/* diagram */
+.dg-wrap { overflow-x: auto; }
+.diagram svg { width: 100%; min-width: 600px; height: auto; display: block; }
+.dg-box { fill: var(--surface); stroke: var(--axis); stroke-width: 1.2; }
+.dg-box.kr { stroke: var(--s-kr); stroke-width: 2; }
+.dg-box.world { stroke: var(--s-jp); stroke-width: 2; }
+.dg-t { fill: var(--ink); font: 700 15px var(--font-display); }
+.dg-s { fill: var(--ink-2); font: 400 12.5px var(--font-body); }
+.dg-m { fill: var(--ink); font: 500 12.5px var(--font-mono); }
+.dg-ok { stroke: var(--ink-2); stroke-width: 1.6; fill: none; }
+.dg-block { stroke: var(--bad); stroke-width: 1.6; fill: none; stroke-dasharray: 5 4; }
+.dg-x { stroke: var(--bad); stroke-width: 2.4; }
+.dg-head { fill: var(--ink-2); }
+.dg-head.bad { fill: var(--bad); }
+.dg-lab { fill: var(--ink-2); font: 500 12px var(--font-body); }
+.dg-lab.bad { fill: var(--bad); }
+
+details.more { border-top: 1px solid var(--hair); padding-top: 10px; }
+details.more summary { cursor: pointer; font-size: 13px; color: var(--accent-ink); }
+details.more[open] summary { margin-bottom: 10px; }
+.foot { border-top: 1px solid var(--hair); margin-top: 48px; padding-top: 18px; }
+code { font-family: var(--font-mono); font-size: 0.9em; background: var(--chip); padding: 1px 5px; border-radius: 4px; }
+pre.cmd { font-family: var(--font-mono); font-size: 13px; background: var(--surface); border: 1px solid var(--hair); border-radius: 8px; padding: 12px 14px; overflow-x: auto; margin: 0; }
+ol.steps { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; max-width: 70ch; }
+.kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 10px; }
+</style>
+
+<nav class="topnav" aria-label="Sections">
+  <div class="topnav-inner">
+    <a class="brand" href="#top">Kimchi Premium</a>
+    <a class="nav" href="#idea">Idea</a>
+    <a class="nav" href="#segmentation">Two prices</a>
+    <a class="nav" href="#signal">Signal</a>
+    <a class="nav" href="#mechanism">Mechanism</a>
+    <a class="nav" href="#results">Results</a>
+    <a class="nav" href="#risk">Risk</a>
+    <a class="nav" href="#robust">Japan placebo</a>
+    <a class="nav" href="#verdict">Verdict</a>
+    <a class="nav" href="#replication">Data &amp; replication</a>
+  </div>
+</nav>
+
+<main class="wrap" id="top">
+  <header class="hero wide">
+    <p class="eyebrow">MFE 230GB · Currency Markets · Final project · Strategy 2: crypto and capital controls</p>
+    <h1>Kimchi Premium</h1>
+    <p class="dek">Korea's capital controls give bitcoin a second price in won. We ask whether that local premium predicts returns well enough to trade. Over the last five years, October 2021 to September 2026, it does: the long-short earns 14.8% a year after funding and costs. But funding and costs take nearly two-thirds of the price gain, and five years are not enough to call the result significant.</p>
+
+    <div class="board" aria-label="Bitcoin's implied won rate">
+      <div class="board-head">
+        <p class="fig-title">One coin, two prices: the won rate bitcoin implies</p>
+        <div class="seg" role="group" aria-label="Date" id="board-dates"></div>
+      </div>
+      <div class="board-grid" id="board"></div>
+      <p class="note">Implied rate = Upbit's won price ÷ Binance's dollar price (USDT). Market rate: Federal Reserve noon New York rate (FRED DEXKOUS). Daily closes at 00:00 UTC.</p>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><span class="lab">Korea's bitcoin premium, five-year average</span><span class="val" data-k="h1.krMean"></span><span class="sub">Japan, no capital controls: <span data-k="h1.jpMean"></span></span></div>
+      <div class="tile"><span class="lab">Next-week return per 1 point of a coin's local premium</span><span class="val" data-k="fm.coef"></span><span class="sub">Fama–MacBeth t = <span data-k="fm.t"></span>, robust to controls</span></div>
+      <div class="tile warn"><span class="lab">Long-short, net of funding and 10 bp costs</span><span class="val"><span data-k="main.net"></span> a year</span><span class="sub">Sharpe <span data-k="main.sharpeNet"></span> (t = <span data-k="main.t"></span>); price <span data-k="main.price"></span>, funding <span data-k="main.funding"></span>, costs <span data-k="main.cost"></span> a year</span></div>
+    </div>
+  </header>
+
+  <section id="idea" class="col">
+    <div class="sec-head">
+      <p class="eyebrow">The idea</p>
+      <h2>Coins can flow into Korea. Won cannot flow out.</h2>
+    </div>
+    <div class="prose">
+      <p>Korean exchanges trade crypto against the won, and only residents with a real-name bank account can use them. Residents cannot freely send won abroad: remittances above small limits need documents, and banks and customs police transfers linked to crypto arbitrage. So an arbitrageur can buy bitcoin abroad and sell it in Seoul, but cannot easily bring the won home. Korean prices can sit above world prices for weeks. Makarov and Schoar (2020) document these gaps and trace them to capital controls.</p>
+      <p>The premium works like a shadow exchange rate: dividing bitcoin's won price by its dollar price gives a second won–dollar rate, set by Korean demand for crypto. It is the same economics as the onshore and offshore yuan, or a covered-interest-parity deviation. One asset trades at two prices, and a constraint keeps arbitrage capital from closing the gap.</p>
+    </div>
+    <div class="fig diagram" style="margin-top:22px">
+      <p class="fig-title">Why the gap survives</p>
+      <div class="dg-wrap"><svg viewBox="0 0 720 300" role="img" aria-label="Diagram: coins move freely between Binance and Upbit; won cannot leave Korea, so the Korean price can exceed the world price.">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="dg-head"></path></marker>
+          <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="dg-head bad"></path></marker>
+        </defs>
+        <rect class="dg-box world" x="10" y="20" width="250" height="150" rx="10"></rect>
+        <text class="dg-t" x="28" y="52">World market</text>
+        <text class="dg-s" x="28" y="76">Binance: coins priced in USDT</text>
+        <text class="dg-s" x="28" y="96">Open to traders everywhere</text>
+        <text class="dg-m" x="28" y="132">P(USD)</text>
+        <rect class="dg-box kr" x="460" y="20" width="250" height="150" rx="10"></rect>
+        <text class="dg-t" x="478" y="52">Korean market</text>
+        <text class="dg-s" x="478" y="76">Upbit: coins priced in won</text>
+        <text class="dg-s" x="478" y="96">Residents with a real-name account</text>
+        <text class="dg-m" x="478" y="132">P(KRW)</text>
+        <line class="dg-ok" x1="268" y1="70" x2="452" y2="70" marker-end="url(#ah)" marker-start="url(#ah)"></line>
+        <text class="dg-lab" x="360" y="58" text-anchor="middle">coins move freely, in minutes</text>
+        <line class="dg-block" x1="452" y1="130" x2="268" y2="130" marker-end="url(#ahb)"></line>
+        <line class="dg-x" x1="350" y1="120" x2="370" y2="140"></line>
+        <line class="dg-x" x1="370" y1="120" x2="350" y2="140"></line>
+        <text class="dg-lab bad" x="360" y="160" text-anchor="middle">won cannot leave freely</text>
+        <text class="dg-m" x="10" y="214">Aggregate premium  κ = P(KRW) ÷ [P(USD) × market ₩/$] − 1, measured on bitcoin</text>
+        <text class="dg-m" x="10" y="242">Coin premium  π(i) = coin i's premium − the median coin's premium</text>
+        <text class="dg-s" x="10" y="270">The exchange rate cancels out of π(i). What is left is Korean demand for one coin, beyond Korean demand for crypto.</text>
+      </svg></div>
+    </div>
+    <div class="prose" style="margin-top:22px">
+      <p><b>Mechanism.</b> Korean retail demand arrives in bursts: attention, pumps, listing hype. It lifts the Korean price first. Domestic arbitrageurs buy abroad and sell in Seoul, so part of the pressure spills into the world price. When the burst fades, the price pressure should reverse, as flow-driven price pressure does in stocks (Coval and Stafford, 2007). We wrote down four hypotheses and the trading rule before running any backtest.</p>
+    </div>
+    <div class="cc-table-wrap" style="margin-top:16px">
+      <table class="cc-table">
+        <thead><tr><th>Hypothesis</th><th>Prediction</th><th>Test</th></tr></thead>
+        <tbody>
+          <tr><td>H1 · Segmentation</td><td class="wrap">Korea's premium is large and persistent; Japan's, with no capital controls, is small and short-lived</td><td class="wrap">Level, persistence (half-life), Korea vs Japan</td></tr>
+          <tr><td>H2 · Reversal</td><td class="wrap">Coins with a high local premium earn less on Binance the next week</td><td class="wrap">Fama–MacBeth; quintile long-short on perpetuals</td></tr>
+          <tr><td>H3 · Froth</td><td class="wrap">A high aggregate premium predicts lower bitcoin returns</td><td class="wrap">4-week predictive regression; a pre-set "froth brake"</td></tr>
+          <tr><td>H4 · Channel</td><td class="wrap">The gap closes mostly through the Korean price, and the world price also falls back</td><td class="wrap">Next-week price changes in Seoul and on Binance</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="segmentation" class="wide">
+    <div class="sec-head">
+      <p class="eyebrow">H1 · Segmentation</p>
+      <h2>Korea's premium is more than ten times Japan's, and it lasts</h2>
+    </div>
+    <div class="stack">
+      <div class="fig">
+        <div class="fig-head"><p class="fig-title">Bitcoin's premium over the world price, 7-day average, October 2021 to September 2026</p></div>
+        <p class="fig-sub">Local bitcoin price over Binance's USDT price converted at the market exchange rate. Korea: Upbit in won. Japan: bitbank in yen; Japan has no capital controls, so arbitrage closes its gap within a day. Hover for values.</p>
+        <div id="kappa-chart"></div>
+      </div>
+      <div class="fig">
+        <p class="fig-title">Premium statistics, daily, last five years</p>
+        <div id="h1-table"></div>
+        <p class="note">Half-life from an AR(1) on the daily log premium. Japan's premium never reached 2% in these five years; Korea's sat above 2% on <span data-k="h1.kr2"></span> of days and below zero on <span data-k="h1.krDisc"></span>. Since June 2024 Upbit also lists USDT itself; its average premium over the market won rate is <span data-k="usdt.mean"></span>, the pure price of moving dollars into Korea.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="signal" class="wide">
+    <div class="sec-head">
+      <p class="eyebrow">Signal and trading rule</p>
+      <h2>Short the coins Koreans pay most for, buy the ones they sell</h2>
+    </div>
+    <div class="stack">
+      <div class="sheet" aria-label="Strategy 2 term sheet">
+        <div class="f">Universe</div><div class="v">Coins listed on Upbit's won market with a Binance USDT-margined perpetual; rebuilt weekly; at least ₩500 million a day of Upbit turnover and $5 million of perpetual volume (<span data-k="u.avg"></span> coins a week on average, <span data-k="u.traded"></span> different coins)</div>
+        <div class="f">Signal</div><div class="v">π(i): the coin's Korean premium minus the median coin's, averaged over the last 7 daily closes. Coins with |π| above 10% are dropped: deposits are suspended or a delisting is under way</div>
+        <div class="f">Position</div><div class="v">Binance perpetuals: short the top fifth by π, long the bottom fifth, equal weights, $1 a side</div>
+        <div class="f">Timing</div><div class="v">Rebalance Mondays 00:00 UTC, hold one week; returns include funding (longs pay when it is positive)</div>
+        <div class="f">Costs</div><div class="v">10 bp per unit traded; the slider below runs 0–40 bp</div>
+        <div class="f">Sample</div><div class="v">Reported window: <span data-k="u.sample"></span>, <span data-k="main.weeks"></span> weeks; no trade in weeks with fewer than 20 eligible coins. The pre-registered 2020–2026 run is in the replication package (see the last section)</div>
+      </div>
+      <div class="fig">
+        <div class="fig-head"><p class="fig-title">One week in the book: formation at 00:00 UTC, Monday <span data-k="live.date"></span></p></div>
+        <p class="fig-sub">The five most extreme coins on each side out of <span data-k="live.n"></span> eligible (<span data-k="live.k"></span> per leg). π is the 7-day average coin premium; funding is the past week's, annualised. Next week: the perpetual's return including funding.</p>
+        <div id="live-table"></div>
+        <p class="note">Most coin premia are tiny: <span data-k="sig.share"></span> of coin-weeks sit inside ±25 bp, and the middle half inside <span data-k="sig.iqr"></span>. Only the tails carry a real demand shock.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="mechanism" class="wide">
+    <div class="sec-head">
+      <p class="eyebrow">H2–H4 · Mechanism</p>
+      <h2>The signal is real: hot coins fall back, in Seoul and on Binance</h2>
+    </div>
+    <div class="stack">
+      <div class="fig-grid">
+        <div class="fig">
+          <p class="fig-title">Next-week return relative to the universe, per year</p>
+          <p class="fig-sub">Coins sorted each week by π. Q1 and Q5 are exactly the legs the strategy trades. Returns fall steadily from Q2 to Q5, but the coins Koreans dump (Q1) do not bounce: the money is in the short leg.</p>
+          <div id="quint-chart"></div>
+        </div>
+        <div class="fig">
+          <p class="fig-title">Which price moves next week (vs the universe)</p>
+          <p class="fig-sub">Top quintile: the premium shrinks by <span data-k="ch.dpi"></span> (t = <span data-k="ch.tdpi"></span>), mostly through the Korean price, and the world price falls too.</p>
+          <div id="channel-chart"></div>
+        </div>
+      </div>
+      <div class="fig-grid">
+        <div class="fig">
+          <p class="fig-title">Fama–MacBeth: next-week return on π (in percentage points)</p>
+          <div id="fm-table"></div>
+          <p class="note">Weekly cross-sections, Newey–West t-statistics. Past returns from Binance spot. The effect builds over two to three weeks (horizon table below).</p>
+          <div id="fmh-table"></div>
+        </div>
+        <div class="fig">
+          <p class="fig-title">H3: does Korean froth predict bitcoin? Not in this window</p>
+          <p class="fig-sub">Bitcoin's return over the next 4 weeks by quintile of the aggregate premium at formation. Slope <span data-k="h3.coef"></span> per point of premium, t = <span data-k="h3.t"></span> (Newey–West, 8 lags): the right sign, but not significant.</p>
+          <div id="froth-chart"></div>
+          <p class="note">The rule written in advance (sit out a week when the premium is in its top decile of the past year) fired in <span data-k="ov.weeks"></span> weeks and lowered bitcoin's Sharpe ratio from <span data-k="ov.btc"></span> to <span data-k="ov.ovl"></span>: bitcoin happened to rally in those weeks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="results" class="wide">
+    <div class="sec-head">
+      <p class="eyebrow">Results</p>
+      <h2>Prices pay; funding and costs take nearly two-thirds</h2>
+    </div>
+    <div class="stack">
+      <div class="fig">
+        <div class="fig-head"><p class="fig-title">Growth of $1, recomputed live</p></div>
+        <p class="fig-sub">Set the cost per unit traded and the period. Every statistic is recomputed in your browser from weekly returns (after funding) and weekly turnover. The second period starts when Japan first has 20 eligible coins, so Korea and the Japan placebo can be compared week for week.</p>
+        <div class="controls" id="wb-controls"></div>
+        <div id="wb-chart"></div>
+        <div id="wb-table"></div>
+        <p class="note">Over the five years, at 10 bp, the rule earns <span data-k="main.net"></span> a year with a Sharpe ratio of <span data-k="main.sharpeNet"></span>, but the Newey–West t-statistic is only <span data-k="main.t"></span>. The net Sharpe ratio reaches zero at about <span data-k="cost.be"></span> per unit traded.</p>
+      </div>
+      <div class="fig-grid">
+        <div class="fig">
+          <p class="fig-title">Where the money goes, by year</p>
+          <p class="fig-sub">Sum of weekly returns; * part year. Prices pay every year. 2026 is down because funding cost <span data-k="y26.fund"></span> against a <span data-k="y26.price"></span> price gain.</p>
+          <div id="year-chart"></div>
+        </div>
+        <div class="fig">
+          <p class="fig-title">Why funding hurts: the arbitrageurs' hedge is crowded</p>
+          <p class="fig-sub">Past-week funding on Binance, annualised, by size of the coin's Korean premium. Arbitrageurs who move coins to Seoul hedge by shorting the perpetual, so high-premium coins carry deeply negative funding. Shorting them means paying it.</p>
+          <div id="bucket-chart"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="risk" class="wide">
+    <div class="sec-head">
+      <p class="eyebrow">Risk</p>
+      <h2>It loses to squeezes and crowded funding</h2>
+    </div>
+    <div class="stack">
+      <div class="fig-grid">
+        <div class="fig">
+          <p class="fig-title">Average weekly net return by Korea's aggregate premium</p>
+          <p class="fig-sub">When Korea trades at a discount the book earns <span data-k="rg.disc"></span> a week; in normal times about zero; above a 5% premium <span data-k="rg.hot"></span> (only <span data-k="rg.hotn"></span> weeks).</p>
+          <div id="regime-chart"></div>
+        </div>
+        <div class="fig">
+          <p class="fig-title">The worst week: <span data-k="worst.date"></span></p>
+          <div class="kv">
+            <div class="tile warn"><span class="lab">Book, net</span><span class="val" data-k="worst.week"></span><span class="sub">one week</span></div>
+            <div class="tile"><span class="lab"><span data-k="worst.coin"></span>'s perpetual</span><span class="val" data-k="worst.ret"></span><span class="sub">short at <span data-k="worst.w"></span> of the short leg</span></div>
+            <div class="tile"><span class="lab">Its local premium</span><span class="val" data-k="worst.sig"></span><span class="sub">funding <span data-k="worst.f"></span> a year: crowded shorts</span></div>
+          </div>
+          <p class="note">Only <span data-k="worst.n"></span> coins per leg qualified that week, so one squeeze could move the whole book. Without this week the net Sharpe ratio is <span data-k="tails.exworst"></span>.</p>
+        </div>
+      </div>
+      <div class="fig">
+        <p class="fig-title">Worst ten weeks and the positions behind them</p>
+        <div id="worst-table"></div>
+      </div>
+      <div class="fig-grid">
+        <div class="fig">
+          <p class="fig-title">Crypto stress episodes (weekly)</p>
+          <div id="episode-table"></div>
+          <p class="note">The book is roughly market-neutral in crashes: market-wide sell-offs hit both legs.</p>
+        </div>
+        <div class="fig">
+          <p class="fig-title">Factor exposures of weekly net returns</p>
+          <div id="expo-table"></div>
+          <p class="note">BTC up/down: bitcoin's weekly return split at zero. ALT: equal-weighted universe minus bitcoin. MOM: 4-week momentum long-short in the same universe. ΔVIX in 10-point units. Newey–West t-statistics.</p>
+        </div>
+      </div>
+      <div class="fig-grid">
+        <div class="fig">
+          <p class="fig-title">P&amp;L by Binance liquidity (per year)</p>
+          <div id="liq-chart"></div>
+          <p class="note">Two-thirds of the gross P&amp;L comes from the most liquid third of coins, so the result does not rest on thin coins.</p>
+        </div>
+        <div class="fig">
+          <p class="fig-title">Concentration: coins with the largest total P&amp;L</p>
+          <div id="conc-table"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="robust" class="wide">
+    <div class="sec-head">
+      <p class="eyebrow">Robustness · Japan placebo</p>
+      <h2>No capital controls, no edge</h2>
+    </div>
+    <div class="stack">
+      <div class="prose col" style="margin-inline:0">
+        <p>One robustness test, the one that speaks to the mechanism: run the identical rule on bitbank's yen market in Japan, where money moves freely. If the signal were crypto noise or a generic retail effect, it should work there too. bitbank first has 20 eligible coins in March 2023 (<span data-k="jp.coins"></span> a week on average), so Korea is shown over exactly the same <span data-k="jp.weeks"></span> weeks.</p>
+      </div>
+      <div class="fig">
+        <div class="fig-head"><p class="fig-title">Growth of $1 over the same weeks, net of 10 bp</p></div>
+        <div id="placebo-chart"></div>
+        <div id="rob-table"></div>
+        <p class="note">Japan loses <span data-k="jp.net"></span> a year (Sharpe <span data-k="jp.sharpe"></span>, <span data-k="jp.gross"></span> before costs), while Korea earns <span data-k="krs.net"></span> over the same weeks (Sharpe <span data-k="krs.sharpe"></span>). The edge exists only where capital is trapped.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="verdict" class="wide">
+    <div class="sec-head">
+      <p class="eyebrow">Verdict</p>
+      <h2>Trapped capital makes the signal; funding and costs eat most of it</h2>
+    </div>
+    <div class="verdicts" id="verdicts"></div>
+    <div class="prose" style="margin-top:22px">
+      <p><b>Lesson.</b> Capital controls make the kimchi premium real, and Korean demand shows up in prices worldwide: the coins Seoul overpays for fall back in Seoul and on Binance, and the same rule fails in Japan, where capital moves freely. Over the last five years the long-short earned <span data-k="main.net"></span> a year after costs, but funding and trading costs took <span data-k="main.eaten"></span> of the price gain, and the trade breaks even at about <span data-k="cost.be"></span> per unit traded. The people who can close the gap already do: they hedge on Binance, and the funding they pay for that hedge is the price of joining them. The same theme runs through Strategy 1: crowding sets the price of a trade, so the cost of entry matters as much as the signal.</p>
+    </div>
+  </section>
+
+  <section id="replication" class="col">
+    <div class="sec-head">
+      <p class="eyebrow">Data, timing and replication</p>
+      <h2>Every number rebuilds from public data</h2>
+    </div>
+    <div class="stack">
+      <div class="cc-table-wrap">
+        <table class="cc-table">
+          <thead><tr><th>Data</th><th>Source</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td class="wrap">Daily won candles, all listed KRW markets</td><td>Upbit public API</td><td class="wrap">Korean prices, turnover</td></tr>
+            <tr><td class="wrap">Daily spot klines; perpetual klines and funding, delisted symbols included</td><td>Binance public data archive</td><td class="wrap">World price, returns, volumes</td></tr>
+            <tr><td class="wrap">Daily yen candles</td><td>bitbank public API</td><td class="wrap">Japan placebo</td></tr>
+            <tr><td class="wrap">KRW/USD and JPY/USD noon rates, VIX, 3-month T-bill</td><td>FRED</td><td class="wrap">Premium, risk states, cash</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p><b>No look-ahead.</b> The signal uses daily closes up to Monday 00:00 UTC, the moment of trading. The coin premium π needs no exchange rate at all; the aggregate premium uses the latest noon New York rate, which is set before each 00:00 UTC close. The universe, filters and weights use only data available at formation.</p>
+        <p><b>Reproduce.</b> The replication package has the code, the processed data and this page. One script downloads everything and rebuilds every table and figure (about 45 minutes, mostly downloads):</p>
+      </div>
+      <pre class="cmd">pip install -r requirements.txt
+bash run_all.sh   # data → panel → backtest → analysis → figures → this page</pre>
+      <div class="prose">
+        <p><b>Pre-registration and the reported window.</b> DESIGN.md fixed the hypotheses, the rule and the robustness grid before the first backtest; its log lists every later change. This page reports the last five years, October 2021 to September 2026. That window was chosen after the pre-registered 2020–2026 test had been run, so it is not an out-of-sample test. The full sample lost <span data-k="fs.net"></span> a year (net Sharpe <span data-k="fs.sharpe"></span>), almost all of it in one week, <span data-k="fs.worst"></span>, when a Dogecoin short cost the book <span data-k="fs.worstNet"></span>; without that week its net Sharpe is <span data-k="fs.exworst"></span>. <code>python -I src/run_backtest.py full</code> rebuilds that run, with the full pre-specified robustness grid, in <code>output/tables/full_sample_2020_2026</code>. <b>AI use.</b> Code, page and slides were generated with Claude (Anthropic) under the course's AI policy; AI_USAGE.md documents the prompts and safeguards.</p>
+        <p><b>Limitations.</b> Upbit's API serves only coins still listed, so coins Upbit later delisted are missing. They typically trade at a Korean discount before delisting, which would put them in our long leg, so the true result is probably worse. USDT is treated as a dollar. Results assume Binance stayed solvent and orderly. Market impact beyond 10 bp is not modelled.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot col">
+    <p class="note">Kimchi Premium · Strategy 2 · MFE 230GB Currency Markets, UC Berkeley Haas · Reported window October 2021 to September 2026 · Generated <span data-k="meta.generated"></span></p>
+  </footer>
+</main>
